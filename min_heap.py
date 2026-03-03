@@ -99,39 +99,25 @@ class MinHeap:
         self._heap.remove_at_index(last_index)
 
         # Percolate down
-        parent = 0
-        size = self._heap.length()
-
-        while True:
-            left = 2 * parent + 1
-            right = 2 * parent + 2
-            smallest = parent
-
-            # Check left child
-            if left < size and self._heap[left] < self._heap[smallest]:
-                smallest = left
-
-            # Check right child
-            if right < size and self._heap[right] < self._heap[smallest]:
-                smallest = right
-
-            if smallest == parent:
-                break
-
-            # Swap
-            temp = self._heap[parent]
-            self._heap[parent] = self._heap[smallest]
-            self._heap[smallest] = temp
-
-            parent = smallest
+        _percolate_down(self._heap,0)
 
         return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
         """
-        TODO: Write this implementation
+        Receives a dynamic array and builds a proper MinHeap from them.
         """
-        pass
+
+        self._heap = DynamicArray()
+        for i in range(da.length()):
+            self._heap.append(da[i])
+
+        # bottom-up
+        n = self._heap.length()
+        parent = (n // 2) - 1
+        while parent >= 0:
+            _percolate_down(self._heap, parent)
+            parent -= 1
 
     def size(self) -> int:
         """
@@ -159,9 +145,33 @@ def heapsort(da: DynamicArray) -> None:
 
 def _percolate_down(da: DynamicArray, parent: int) -> None:
     """
-    TODO: Write your implementation
+    percolate downward until heap property is restored.
     """
-    pass
+    size = da.length()
+
+    while True:
+        left = 2 * parent + 1
+        right = 2 * parent + 2
+
+        # no children
+        if left >= size:
+            return
+
+        # choose smaller child (tie -> left)
+        smallest_child = left
+        if right < size and da[right] < da[left]:
+            smallest_child = right
+
+        # if parent already <= smallest child, we're done
+        if da[parent] <= da[smallest_child]:
+            return
+
+        # swap parent with smallest child
+        temp = da[parent]
+        da[parent] = da[smallest_child]
+        da[smallest_child] = temp
+
+        parent = smallest_child
 
 
 # ------------------- BASIC TESTING -----------------------------------------
