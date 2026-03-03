@@ -134,9 +134,18 @@ class MinHeap:
 
 def heapsort(da: DynamicArray) -> None:
     """
-    TODO: Write this implementation
+    receives a dynamic array and sorts its content in non-ascending order.
     """
-    pass
+    #build heap from input DA
+    heap = MinHeap()
+    heap.build_heap(da)
+
+    #Remove objects one by one and place them from end to start
+    index = da.length() - 1
+
+    while index >= 0:
+        da[index] = heap.remove_min()
+        index -= 1
 
 
 # It's highly recommended that you implement the following optional          #
