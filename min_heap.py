@@ -64,15 +64,19 @@ class MinHeap:
         # Percolate up
     def is_empty(self) -> bool:
         """
-        TODO: Write this implementation
+        Return true if the heap is empty; otherwise, it returns False.
         """
-        pass
+        return self._heap.length() == 0
 
     def get_min(self) -> object:
         """
-        TODO: Write this implementation
+        Return the minimum without removing it from the heap.
+        If the heap is empty, the method raises exception
         """
-        pass
+        if self.is_empty():
+            raise   MinHeapException
+
+        return self._heap[0]
 
     def remove_min(self) -> object:
         """
