@@ -121,15 +121,15 @@ class MinHeap:
 
     def size(self) -> int:
         """
-        TODO: Write this implementation
+        returns the number of items currently stored in heap
         """
-        pass
+        return self._heap.length()
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        clears the content of the heap
         """
-        pass
+        self._heap = DynamicArray()
 
 
 def heapsort(da: DynamicArray) -> None:
