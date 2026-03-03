@@ -71,7 +71,7 @@ class MinHeap:
     def get_min(self) -> object:
         """
         Return the minimum without removing it from the heap.
-        If the heap is empty, the method raises exception
+        If the heap is empty, the method raises exception.
         """
         if self.is_empty():
             raise   MinHeapException
@@ -80,9 +80,52 @@ class MinHeap:
 
     def remove_min(self) -> object:
         """
-        TODO: Write this implementation
+        Remove and return the minimum element.
+        Raise MinHeapException if heap is empty.
         """
-        pass
+        if self.is_empty():
+            raise MinHeapException
+
+        min_value = self._heap[0]
+
+        # If only one element
+        if self._heap.length() == 1:
+            self._heap.remove_at_index(0)
+            return min_value
+
+        # Move last element to root
+        last_index = self._heap.length() - 1
+        self._heap[0] = self._heap[last_index]
+        self._heap.remove_at_index(last_index)
+
+        # Percolate down
+        parent = 0
+        size = self._heap.length()
+
+        while True:
+            left = 2 * parent + 1
+            right = 2 * parent + 2
+            smallest = parent
+
+            # Check left child
+            if left < size and self._heap[left] < self._heap[smallest]:
+                smallest = left
+
+            # Check right child
+            if right < size and self._heap[right] < self._heap[smallest]:
+                smallest = right
+
+            if smallest == parent:
+                break
+
+            # Swap
+            temp = self._heap[parent]
+            self._heap[parent] = self._heap[smallest]
+            self._heap[smallest] = temp
+
+            parent = smallest
+
+        return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
         """
